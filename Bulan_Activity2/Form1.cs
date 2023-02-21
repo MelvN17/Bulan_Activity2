@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,28 +21,30 @@ namespace Bulan_Activity2
         private void Form1_Load(object sender, EventArgs e)
         {
 
+
         }
 
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int primeN = (int)numericUpDown1.Value;
-            int primeG = (int)numericUpDown2.Value;
-            int randomX = (int)numericUpDown3.Value;
-            int randomY = (int)numericUpDown4.Value;
-            int a, b, k1, k2;
+            //Bulan, Melvin S.
+            BigInteger primeN = BigInteger.Parse(numericUpDown1.Value.ToString());
+            BigInteger primeG = BigInteger.Parse(numericUpDown2.Value.ToString());
+            BigInteger randomX = BigInteger.Parse(numericUpDown3.Value.ToString());
+            BigInteger randomY = BigInteger.Parse(numericUpDown4.Value.ToString());
+            BigInteger a, b, k1, k2;
 
             //Alice
-            a = ((int)Math.Pow(primeG, randomX)) % primeN;
+            a = BigInteger.ModPow(primeG, randomX, primeN);
 
             //Bob
-            b = ((int)Math.Pow(primeG, randomY)) % primeN;
+            b = BigInteger.ModPow(primeG, randomY, primeN);
 
-            k1 = ((int)Math.Pow(b,randomX)) % primeN;
-            k2 = ((int)Math.Pow(a, randomY)) % primeN;
+            k1 = BigInteger.ModPow(b, randomX, primeN);
+            k2 = BigInteger.ModPow(a, randomY, primeN);
 
             if (k1 == k2)
-                textBox5.Text = Convert.ToString(k1);
+                textBox5.Text = k1.ToString();
             else
                 textBox5.Text = "Prime number not valid";
         }
